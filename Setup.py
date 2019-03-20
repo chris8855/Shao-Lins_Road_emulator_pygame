@@ -24,7 +24,15 @@ herokickImg2 = pygame.transform.flip(herokickImg2, True, False)
 
 #Enemy Img
 enemyImg = pygame.image.load('Assets/enemy.png')
-enemyImg = pygame.transform.scale(heroImg, (200, 200))
+enemyImg = pygame.transform.scale(enemyImg, (200, 200))
+
+class Enemy():
+    def __init__(self):
+        self.x = enemyX
+        self.y = enemyY
+
+    def blit(self):
+        self.blit = DISPLAYSURF.blit(enemyImg, (enemyX, enemyY))
 
 #Background Img
 bg = pygame.image.load("Assets/background.png")
@@ -34,7 +42,7 @@ bg = pygame.transform.scale(bg, (800, 800))
 heroX = 650
 heroY = 550 
 enemyX = 400
-enemyY = 400
+enemyY = 253
 
 
 
@@ -44,9 +52,17 @@ while True: # main game loop
     #Draw background
     DISPLAYSURF.blit(bg, (0, 0))
 
+    #Enemy logic 
+    if enemyX < 750 :
+        enemyX = enemyX - 1
 
+    if enemyX > 200:
+        enemyX = enemyX + 2
+            
+    enemy = Enemy()
+    enemy.blit()
  
-
+    #Hero Logic
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and heroX > -50: 
         heroX -= 10
@@ -54,7 +70,6 @@ while True: # main game loop
     if keys[pygame.K_RIGHT] and heroX < 650:
         heroX += 10
         
-
     if keys[pygame.K_SPACE] and keys[pygame.K_RIGHT]:
         kicking = True
         DISPLAYSURF.blit(herokickImg, (heroX, heroY))
@@ -70,23 +85,6 @@ while True: # main game loop
 
     fpsClock.tick(FPS)
     pygame.display.update()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     for event in pygame.event.get():
         if event.type == QUIT:
